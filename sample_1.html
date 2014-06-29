@@ -1,0 +1,116 @@
+<html><head>
+<!-- 
+JPOSTALサンプル
+
+Copyright (c) 2003-2014 Aoki Makoto Ninton G.K. http://www.ninton.co.jp
+
+ -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>J-POSTAL</title>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="jquery.jpostal.js"></script>
+<script type="text/javascript">
+$(window).ready( function() {
+	$('#postcode1').jpostal({
+		postcode : [
+			'#postcode1',
+			'#postcode2'
+		],
+		address : {
+			'#address1'  : '%3',
+			'#address2'  : '%4',
+			'#address3'  : '%5'
+		}
+	});
+});
+</script>
+
+</head><body>
+
+<form>
+
+<h1>住所入力</h1>
+
+
+★付きの項目に自動入力します。<br>
+<table border=0>
+<tr>
+  <td>郵便番号</td>
+  <td>〒 <input id="postcode1" name=postcode1 size=9 maxlength=3
+       >-<input id="postcode2" name=postcode2 size=9 maxlength=4>
+  </td>
+</tr>
+
+<tr>
+  <td>★都道府県 </td>
+  <td><select id=address1 name=address1>
+<option value="" selected>選択してください 
+<option value="北海道">北海道
+<option value="青森県">青森県
+<option value="岩手県">岩手県
+<option value="宮城県">宮城県
+<option value="秋田県">秋田県
+<option value="山形県">山形県
+<option value="福島県">福島県
+<option value="茨城県">茨城県
+<option value="栃木県">栃木県
+<option value="群馬県">群馬県
+<option value="埼玉県">埼玉県
+<option value="千葉県">千葉県
+<option value="東京都">東京都
+<option value="神奈川県">神奈川県
+<option value="新潟県">新潟県
+<option value="富山県">富山県
+<option value="石川県">石川県
+<option value="福井県">福井県
+<option value="山梨県">山梨県
+<option value="長野県">長野県
+<option value="岐阜県">岐阜県
+<option value="静岡県">静岡県
+<option value="愛知県">愛知県
+<option value="三重県">三重県
+<option value="滋賀県">滋賀県
+<option value="京都府">京都府
+<option value="大阪府">大阪府
+<option value="兵庫県">兵庫県
+<option value="奈良県">奈良県
+<option value="和歌山県">和歌山県
+<option value="鳥取県">鳥取県
+<option value="島根県">島根県
+<option value="岡山県">岡山県
+<option value="広島県">広島県
+<option value="山口県">山口県
+<option value="徳島県">徳島県
+<option value="香川県">香川県
+<option value="愛媛県">愛媛県
+<option value="高知県">高知県
+<option value="福岡県">福岡県
+<option value="佐賀県">佐賀県
+<option value="長崎県">長崎県
+<option value="熊本県">熊本県
+<option value="大分県">大分県
+<option value="宮崎県">宮崎県
+<option value="鹿児島県">鹿児島県
+<option value="沖縄県">沖縄県 
+    </select>
+  </td>
+</tr>
+
+<tr><td>★市区町村 </td><td><input id=address2 name=address2 size=40 maxlength=100>(全角)</td></tr>
+<tr><td>★町域     </td><td><input id=address3 name=address3 size=40 maxlength=100>(全角)</td></tr>
+<tr><td>番地建物 </td><td><input name=address4 size=40 maxlength=100>(全角)</td></tr>
+<tr><td>名称     </td><td><input name=address5 size=40 maxlength=100>(全角)</td></tr>
+</table>
+
+
+
+<div align=center>
+	<input type=reset  value="クリア">
+</div>
+
+<hr>
+<div align=right>Copyright(C) 2003-2014 Ninton G.K.</div>
+
+</form>
+</body></html>
