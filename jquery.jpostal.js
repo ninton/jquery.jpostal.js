@@ -1,23 +1,11 @@
 function JpostalDatabase ( i_options ) {
 	this.address = [];	// database cache
 	this.map     = {
-		'_000' : true
+		'_000' : { state : 'complete', time : 0 }
 	};
 	this.url     = {
 		'http'  :  'http://dfufxgjxjypzf.cloudfront.net/jpostal_v2/json/',
 		'https' : 'https://dfufxgjxjypzf.cloudfront.net/jpostal_v2/json/',
-	};
-	
-	this.exists = function ( i_postcode ) {
-		var f = false;
-		
-		if ( typeof this.map['_' + i_postcode] != 'undefined' ) {
-			f = true;
-		} else {
-			f = false;
-		}
-		
-		return f;
 	};
 	
 	this.find = function ( i_postcode ) {
@@ -99,9 +87,10 @@ function JpostalDatabase ( i_options ) {
 		var _this = this;
 		var head3 = i_postcode.substr(0, 3);
 		
-		if ( i_postcode.length <= 2 || this.exists(head3) || head3.match(/[^0-9]/) ) {
+		if ( i_postcode.length <= 2 || this.getStatus(head3) != 'none' || head3.match(/[^0-9]/) ) {
 			return ;
 		}
+		this.setStatus(head3, 'waiting');
 		
 		var url = this.getUrl( head3 );
 		console.log( url );
@@ -128,10 +117,65 @@ function JpostalDatabase ( i_options ) {
 			
 			if ( typeof this.map[postcode] == 'undefined' ) {
 				this.address.push( rcd );
-				this.map[postcode] = true;
+				this.map[postcode] = {state : 'complete', time : 0};
+			} else if ( this.map[postcode].state == 'waiting' ) {
+				this.address.push( rcd );
+				this.map[postcode].state = 'complete';
 			}
 		}
 	};
+
+	this.getStatus = function ( i_postcode ) {
+		//	--------------------------------------------------
+		//	#	['_001']	..state		.time		result
+		//	--------------------------------------------------
+		//	1	 =undefined	-			-			none
+		//	2	!=undefined	'complete'	-			complete
+		//	3	!=undefined	'waiting'	<5sec		waiting
+		//	4	!=undefined	'waiting'	>=5sec		none
+		//	--------------------------------------------------
+		var st = '';
+		var	postcode = '_' + i_postcode;
+		
+		console.log( postcode );
+		console.log( typeof this.map[postcode] );
+		
+		if ( typeof this.map[postcode] == 'undefined' ) {
+			// # 1
+			st = 'none';
+			
+		} else if ( 'complete' == this.map[postcode].state ) {
+			// # 2
+			st = 'complete';
+			
+		} else {
+			var t_ms = (new Date()).getTime() - this.map[postcode].time;
+			if ( t_ms < 5000 ) {
+				// # 3
+				st = 'waiting';
+			
+			} else {
+				// # 4
+				st = 'none';
+			}
+		}
+		
+		return st;
+	};
+	
+	this.setStatus = function ( i_postcode ) {
+		var	postcode = '_' + i_postcode;
+		
+		if ( typeof this.map[postcode] == 'undefined' ) {
+			this.map[postcode] = {
+				state : 'waiting',
+				time  : 0
+			};
+		}
+		
+		this.map[postcode].time = (new Date()).getTime();
+	};
+
 }
 
 function Jpostal ( i_JposDb ) {
@@ -225,7 +269,7 @@ var JposDb = new JpostalDatabase();
 		
 		for ( var i = 0; i < Jpos.options.postcode.length; ++i ) {
 			var selector = Jpos.options.postcode[i];
-			$(selector).bind('keyup change', function() {
+			$(selector).bind('keyup change', function(e) {
 				Jpos.main();
 			});
 		}
