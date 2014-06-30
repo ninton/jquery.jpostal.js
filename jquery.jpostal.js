@@ -93,31 +93,32 @@ function JpostalDatabase ( i_options ) {
 		return url;
 	};
 
-	this.request = function ( i_postcode ) {
+	this.request = function ( i_postcode, i_callback ) {
 		var _this = this;
 		var head3 = i_postcode.substr(0, 3);
 		
 		if ( i_postcode.length <= 2 || this.getStatus(head3) != 'none' || head3.match(/[^0-9]/) ) {
-			return ;
+			return false;
 		}
 		this.setStatus(head3, 'waiting');
 		
 		var url = this.getUrl( head3 );
-		console.log( url );
 		
 		var options = { 
 			async         : false,
 			dataType      : 'jsonp',
-			jsonp         : false,
-			jsonpCallback : '',
+			jsonpCallback : 'jQuery_jpostal_callback',
 			type          : 'GET',
 			url           : url,
+			success       : function(i_data, i_dataType) {
+				i_callback();
+			},
 			error         : function(i_XMLHttpRequest, i_textStatus, i_errorThrown) {
-				;
 			},
 			timeout : 5000	// msec
 		};
 		$.ajax( options );
+		return true;
 	};
 	
 	this.save = function ( i_data ) {
@@ -146,9 +147,6 @@ function JpostalDatabase ( i_options ) {
 		//	--------------------------------------------------
 		var st = '';
 		var	postcode = '_' + i_postcode;
-		
-		console.log( postcode );
-		console.log( typeof this.map[postcode] );
 		
 		if ( typeof this.map[postcode] == 'undefined' ) {
 			// # 1
@@ -197,6 +195,8 @@ function Jpostal ( i_JposDb ) {
 	this.displayAddress = function () {
 		for ( var key in this.options.address ) {
 			var s = this.formatAddress( this.options.address[key], this.address );
+			console.log( key + "=" + s );
+			console.log( this.address );
 			$(key).val( s );
 		}
 	};
@@ -238,7 +238,17 @@ function Jpostal ( i_JposDb ) {
 	
 	this.main = function () {
 		this.scanPostcode();
-		this.jposDb.request( this.postcode );
+		
+		var _this = this;
+		var f = this.jposDb.request( this.postcode, function () {
+			_this.callback();
+		});
+		if ( !f ) {
+			this.callback();
+		}
+	};
+	
+	this.callback = function () {
 		this.address = this.jposDb.get( this.postcode );
 		this.displayAddress();
 	};
@@ -273,6 +283,11 @@ function Jpostal ( i_JposDb ) {
 //	001.js.php	$_GET['callback']	local scopde for function($){}
 //	---------------------------------------------------------------------
 var JposDb = new JpostalDatabase();
+
+function jQuery_jpostal_callback( i_data ) {
+	//console.log( 'jQuery_jpostal_callback' );
+	JposDb.save( i_data );
+}
 
 (function($) {
 	$.fn.jpostal = function( i_options ){
