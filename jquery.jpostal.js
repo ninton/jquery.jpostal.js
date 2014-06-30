@@ -1,3 +1,13 @@
+/**
+ * jquery.jpostal.js
+ * 
+ * Copyright 2014, Aoki Makoto, Ninton G.K. http://www.ninton.co.jp
+ * 
+ * Released under the MIT license - http://en.wikipedia.org/wiki/MIT_License
+ * 
+ * Requirements
+ * jquery.js
+ */
 function JpostalDatabase ( i_options ) {
 	this.address = [];	// database cache
 	this.map     = {
@@ -9,7 +19,7 @@ function JpostalDatabase ( i_options ) {
 	};
 	
 	this.find = function ( i_postcode ) {
-		var	address;
+		var	address = [];
 		
 		for ( var i = 0; i < this.address.length; ++i ) {
 			if ( this.address[i][0] == '_' + i_postcode ) {

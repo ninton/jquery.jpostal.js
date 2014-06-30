@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+
+#postcode1 {
+	width: 3em;
+}
+
+#postcode2 {
+	width: 4em;
+}
+
+#address2,
+#address3,
+#address4,
+#address5 {
+	width: 20em;
+} 
