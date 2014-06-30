@@ -195,8 +195,6 @@ function Jpostal ( i_JposDb ) {
 	this.displayAddress = function () {
 		for ( var key in this.options.address ) {
 			var s = this.formatAddress( this.options.address[key], this.address );
-			console.log( key + "=" + s );
-			console.log( this.address );
 			$(key).val( s );
 		}
 	};
@@ -285,7 +283,6 @@ function Jpostal ( i_JposDb ) {
 var JposDb = new JpostalDatabase();
 
 function jQuery_jpostal_callback( i_data ) {
-	//console.log( 'jQuery_jpostal_callback' );
 	JposDb.save( i_data );
 }
 
