@@ -207,6 +207,8 @@ function Jpostal ( i_JposDb ) {
 		s = s.replace( /%3|%p|%prefecture/, i_address[1] );
 		s = s.replace( /%4|%c|%city/      , i_address[2] );
 		s = s.replace( /%5|%t|%town/      , i_address[3] );
+		s = s.replace( /%6|%a|%address/   , i_address[4] );
+		s = s.replace( /%7|%n|%name/      , i_address[5] );
 		
 		return s;
 	};

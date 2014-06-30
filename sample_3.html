@@ -16,7 +16,9 @@ $(window).ready( function() {
 		address : {
 			'#address1'  : '%3',
 			'#address2'  : '%4',
-			'#address3'  : '%5'
+			'#address3'  : '%5',
+			'#address4'  : '%6',
+			'#address5'  : '%7',
 		},
 		url : {
 			'http'  : 'json/',
@@ -28,7 +30,7 @@ $(window).ready( function() {
 </head>
 <body>
 <form>
-<h1>郵便番号欄が2つ</h1>
+<h1>大口事業所</h1>
 ★付きの項目に自動入力します。<br />
 	
 郵便番号 〒<br />
@@ -92,10 +94,10 @@ $(window).ready( function() {
 ★町域<br />
 <input id="address3" name="address3"><br />
 
-番地建物<br />
+★番地建物<br />
 <input id="address4" name="address4"><br />
 
-名称<br />
+★名称<br />
 <input id="address5" name="address5"><br />
 
 <input type="reset"  value="クリア">
