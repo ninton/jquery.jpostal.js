@@ -1,10 +1,16 @@
 jquery.jpostal.js
 =================
+Copyright 2014, Aoki Makoto, Ninton G.K. http://www.ninton.co.jp
 
-�X�֔ԍ�����͂���ƏZ�����֎������͂���jQuery�v���O�C���ł��B
+Released under the MIT license - http://en.wikipedia.org/wiki/MIT_License
+
+Requirements
+jquery.js
+
+郵便番号を入力すると住所欄へ自動入力するjQueryプラグインです。
 
 --------------------------------------------------
-�g�p��
+使用例
 --------------------------------------------------
 (sample_1.html)
 
@@ -30,109 +36,109 @@ $(window).ready( function() {
 });
 
 --------------------------------------------------
-�ݒu���@
+設置方法
 --------------------------------------------------
-1. jquery.jpostal.js���T�[�o�ɐݒu���Ă��������B
+1. jquery.jpostal.jsをサーバに設置してください。
 
-  �A�b�v���[�h��͔C�ӂł��B
-  html�t�H�[���ƈႤ�T�[�o���\�ł��B
-  �A�b�v���[�h��̗�1  js/jpostal/jquery.jpostal.js
-  �A�b�v���[�h��̗�2  js/jquery.jpostal.js
+  アップロード先は任意です。
+  htmlフォームと違うサーバも可能です。
+  アップロード先の例1  js/jpostal/jquery.jpostal.js
+  アップロード先の例2  js/jquery.jpostal.js
   
-2. json/*.json ���T�[�o�ɃA�b�v���[�h���Ă��������B
+2. json/*.json をサーバにアップロードしてください。
 
-  �A�b�v���[�h��͔C�ӂł��B
-  jquery.jpostal.js�Ƃ̑��Ί֌W�͂���܂���B
-  html�t�H�[���Ajquery.jpostal.js�ƈႤ�T�[�o�ł����܂��܂���B
-  �A�b�v���[�h��̗�1  js/jpostal/json/*.json
-  �A�b�v���[�h��̗�2  js/json/*.json
+  アップロード先は任意です。
+  jquery.jpostal.jsとの相対関係はありません。
+  htmlフォーム、jquery.jpostal.jsと違うサーバでもかまいません。
+  アップロード先の例1  js/jpostal/json/*.json
+  アップロード先の例2  js/json/*.json
 
-3. �Z�����̓t�H�[����jquery�{�̂�jquery.jpostal.js���C���N���[�h���Ă��������B
+3. 住所入力フォームにjquery本体とjquery.jpostal.jsをインクルードしてください。
 
-  ��
+  例
   <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
   <script type="text/javascript" src="js/jquery.jpostal.js"></script>
 
-4. jpostal�v���O�C���Ăяo�����L�q���Ă��������B
+4. jpostalプラグイン呼び出しを記述してください。
 
-4-1. .jpostal���w�肷��Z���N�^
+4-1. .jpostalを指定するセレクタ
 
 $('#postcode1').jpostal({
 
-	�X�֔ԍ����̃Z���N�^���w�肵�Ă��������B
-	�X�֔ԍ�����2�̏ꍇ�́A�ŏ���1�������w�肵�Ă��������B
-	DOM id��ݒ肵�Ă����ق����w�肪�ȒP�ł��B
+	郵便番号欄のセレクタを指定してください。
+	郵便番号欄が2個の場合は、最初の1個だけを指定してください。
+	DOM idを設定していたほうが指定が簡単です。
 
-	��1
+	例1
 	<input id="postcode1_1" name="postcode1" />
 	$('#postcode1_1').jpostal({
 
-	��2
-	DOM id�Ȃ��̏ꍇ
+	例2
+	DOM idなしの場合
 	<input name="postcode1" />
 	$('[name=postcode1]').jpostal({
 
-4-2. ����
+4-2. 引数
 
-postcode	�X�֔ԍ���
-	�X�֔ԍ����Z���N�^�̔z��
+postcode	郵便番号欄
+	郵便番号欄セレクタの配列
 	
-	��1
-	�X�֔ԍ�����1��
+	例1
+	郵便番号欄が1個
 	postcode : [
 		'#postcode'
 	]
 
-	��2
-	�X�֔ԍ�����2��
+	例2
+	郵便番号欄が2個
 	postcode : [
 		'#postcode1',
 		'#postcode2'
 	]
 			
-address		�Z����
-	�Z�����Z���N�^�Ɠ��͍��ڃt�H�[�}�b�g�̘A�z�z��
+address		住所欄
+	住所欄セレクタと入力項目フォーマットの連想配列
 
-	���͍��ڃt�H�[�}�b�g
-	%3	�s���{��
-	%4	�s�撬��
-	%5	����
-	%6	������Ə��̔Ԓn
-	%7	������Ə��̖���
+	入力項目フォーマット
+	%3	都道府県
+	%4	市区町村
+	%5	町域
+	%6	大口事業所の番地
+	%7	大口事業所の名称
 	
-	��1
-	�s���{�����A�Z������2��
+	例1
+	都道府県欄、住所欄の2個
 	address : {
 		'#prefecture'  : '%3',
 		'#address'     : '%4%5',
 	}
 
-	��2
-	�s���{�����A�Z�����A�Ԓn����3��
+	例2
+	都道府県欄、住所欄、番地欄の3個
 	address : {
 		'#prefecture'  : '%3',
 		'#address1'    : '%4',
 		'#address2'    : '%5',
 	}
 
-url		json/*.json��URL
-	�Z���t�H�[������json/*.json�ւ̑���URL�܂��͐��URL�B
-	http�p�Ahttps�p���w�肵�Ă��������B
+url		json/*.jsonのURL
+	住所フォームからjson/*.jsonへの相対URLまたは絶対URL。
+	http用、https用を指定してください。
 
-	��1
+	例1
 	url : {
 		'http'  : 'json/',
 		'https' : 'json/'
 	}
 
-	��2
+	例2
 	url : {
 		'http'  : 'http://www.example.jp/json/',
 		'https' : 'https://ssl.example.jp/mysite/json/'
 	}
 
-	��3
-	http�Ahttps �ǂ���������z�X�g�ƃp�X�̏ꍇ
+	例3
+	http、https どちらも同じホストとパスの場合
 	url : {
 		'http'  : '//www.example.jp/json/',
 		'https' : '//www.example.jp/json/'
