@@ -291,11 +291,17 @@ function jQuery_jpostal_callback( i_data ) {
 		var Jpos = new Jpostal( JposDb );
 		Jpos.init( i_options );
 		
-		for ( var i = 0; i < Jpos.options.postcode.length; ++i ) {
-			var selector = Jpos.options.postcode[i];
-			$(selector).bind('keyup change', function(e) {
+		if ( typeof i_options.click == 'string' && i_options.click != '' ) {
+			$(i_options.click).bind('click', function(e) {
 				Jpos.main();
-			});
+			});			
+		} else {
+			for ( var i = 0; i < Jpos.options.postcode.length; ++i ) {
+				var selector = Jpos.options.postcode[i];
+				$(selector).bind('keyup change', function(e) {
+					Jpos.main();
+				});
+			}
 		}
 	};
 })(jQuery);
