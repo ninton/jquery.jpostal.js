@@ -238,7 +238,7 @@ function Jpostal ( i_JposDb ) {
 	this.main = function () {
 		this.scanPostcode();
 		if ( this.postcode.length < this.minLen ) {
-			// git hub issue #4: —X•Ö”Ô†—“‚ª0`2•¶Žš‚Ì‚Æ‚«AZŠ—“‚ð‹ó—“‚É‚¹‚¸A“ü—Í“à—e‚ðˆÛŽ‚µ‚Ä‚Ù‚µ‚¢ 
+			// git hub issue #4: éƒµä¾¿ç•ªå·æ¬„ãŒ0ï½ž2æ–‡å­—ã®ã¨ãã€ä½æ‰€æ¬„ã‚’ç©ºæ¬„ã«ã›ãšã€å…¥åŠ›å†…å®¹ã‚’ç¶­æŒã—ã¦ã»ã—ã„ 
 			return ;
 		}
 		

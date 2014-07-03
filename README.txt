@@ -8,6 +8,8 @@ Requirements
 jquery.js
 
 郵便番号を入力すると住所欄へ自動入力するjQueryプラグインです。
+jpostal.googlecode.comで公開していますので、jquery.jpostal.jsやjson/*.jsonを設置する必要がありません。
+サイト運営者の定期的な郵便データ更新作業も必要ありません。
 
 --------------------------------------------------
 使用例
@@ -15,7 +17,7 @@ jquery.js
 (sample_1.html)
 
 <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-<script type="text/javascript" src="jquery.jpostal.js"></script>
+<script type="text/javascript" src="//jpostal.googlecode.com/svn/trunk/jquery.jpostal.js"></script>
 <script type="text/javascript">
 $(window).ready( function() {
 	$('#postcode1').jpostal({
@@ -27,16 +29,84 @@ $(window).ready( function() {
 			'#address1'  : '%3',
 			'#address2'  : '%4',
 			'#address3'  : '%5'
-		},
-		url : {
-			'http'  : 'json/',
-			'https' : 'json/',
-		},
+		}
 	});
 });
 
 --------------------------------------------------
-設置方法
+設置方法A
+--------------------------------------------------
+1. 住所入力フォームにjquery本体とjquery.jpostal.jsをインクルードしてください。
+
+  例
+  <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+  <script type="text/javascript" src="//jpostal.googlecode.com/svn/trunk/jquery.jpostal.js"></script>
+
+2. jpostalプラグイン呼び出しを記述してください。
+
+2-1. .jpostalを指定するセレクタ
+
+$('#postcode1').jpostal({
+
+	郵便番号欄のセレクタを指定してください。
+	郵便番号欄が2個の場合は、最初の1個だけを指定してください。
+	DOM idを設定していたほうが指定が簡単です。
+
+	例1
+	<input id="postcode1_1" name="postcode1" />
+	$('#postcode1_1').jpostal({
+
+	例2
+	DOM idなしの場合
+	<input name="postcode1" />
+	$('[name=postcode1]').jpostal({
+
+2-2. 引数
+
+postcode	郵便番号欄
+	郵便番号欄セレクタの配列
+	
+	例1
+	郵便番号欄が1個
+	postcode : [
+		'#postcode'
+	]
+
+	例2
+	郵便番号欄が2個
+	postcode : [
+		'#postcode1',
+		'#postcode2'
+	]
+			
+address		住所欄
+	住所欄セレクタと入力項目フォーマットの連想配列
+
+	入力項目フォーマット
+	%3	都道府県
+	%4	市区町村
+	%5	町域
+	%6	大口事業所の番地
+	%7	大口事業所の名称
+	
+	例1
+	都道府県欄、住所欄の2個
+	address : {
+		'#prefecture'  : '%3',
+		'#address'     : '%4%5',
+	}
+
+	例2
+	都道府県欄、住所欄、番地欄の3個
+	address : {
+		'#prefecture'  : '%3',
+		'#address1'    : '%4',
+		'#address2'    : '%5',
+	}
+
+--------------------------------------------------
+設置方法B
+ご自分のサーバに郵便データを設置する場合
 --------------------------------------------------
 1. jquery.jpostal.jsをサーバに設置してください。
 
