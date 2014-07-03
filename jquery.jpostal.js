@@ -1,5 +1,5 @@
 /**
- * jquery.jpostal.js
+ * jquery.jpostal.js ver2.2
  * 
  * Copyright 2014, Aoki Makoto, Ninton G.K. http://www.ninton.co.jp
  * 
@@ -11,7 +11,6 @@
 function JpostalDatabase ( i_options ) {
 	this.address = [];	// database cache
 	this.map     = {
-		'_000' : { state : 'complete', time : 0 }
 	};
 	this.url     = {
 		'http'  : '//jpostal.googlecode.com/svn/trunk/json/',
@@ -194,6 +193,10 @@ function Jpostal ( i_JposDb ) {
 	this.minLen   = 3;
 	
 	this.displayAddress = function () {
+		if ( this.postcode == '000info') {
+			this.address[2] += ' ' + this.getScriptSrc();
+		}
+		
 		for ( var key in this.options.address ) {
 			var s = this.formatAddress( this.options.address[key], this.address );
 			$(key).val( s );
@@ -211,6 +214,19 @@ function Jpostal ( i_JposDb ) {
 		
 		return s;
 	};
+
+	this.getScriptSrc = function () {
+		var src = '';
+		
+		var	el_arr = document.getElementsByTagName('script');
+		for ( var i = 0; i < el_arr.length; ++i ) {
+			if ( 0 <= el_arr[i].src.search(/jquery.jpostal.js/) ) {
+				src = el_arr[i].src; 		
+			}
+		}
+
+		return src;
+	}
 
 	this.init = function ( i_options ) {
 		
