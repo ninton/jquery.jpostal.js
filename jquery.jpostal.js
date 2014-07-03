@@ -14,8 +14,8 @@ function JpostalDatabase ( i_options ) {
 		'_000' : { state : 'complete', time : 0 }
 	};
 	this.url     = {
-		'http'  :  'http://dfufxgjxjypzf.cloudfront.net/jpostal_v2/json/',
-		'https' : 'https://dfufxgjxjypzf.cloudfront.net/jpostal_v2/json/',
+		'http'  : '//jpostal.googlecode.com/svn/trunk/',
+		'https' : '//jpostal.googlecode.com/svn/trunk/',
 	};
 	
 	this.find = function ( i_postcode ) {

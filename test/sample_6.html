@@ -5,7 +5,7 @@
 <title>J-POSTAL</title>
 <link rel="stylesheet" type="text/css" href="sample.css" />
 <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-<script type="text/javascript" src="//jpostal.googlecode.com/svn/trunk/jquery.jpostal.js"></script>
+<script type="text/javascript" src="../jquery.jpostal.js"></script>
 <script type="text/javascript">
 $(window).ready( function() {
 	$('#postcode1_1').jpostal({
@@ -17,6 +17,10 @@ $(window).ready( function() {
 			'#address1_1'  : '%3',
 			'#address1_2'  : '%4',
 			'#address1_3'  : '%5'
+		},
+		url : {
+			'http'  : '../json/',
+			'https' : '../json/',
 		}
 	});
 

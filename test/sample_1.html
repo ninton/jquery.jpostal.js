@@ -5,7 +5,7 @@
 <title>J-POSTAL</title>
 <link rel="stylesheet" type="text/css" href="sample.css" />
 <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-<script type="text/javascript" src="//jpostal.googlecode.com/svn/trunk/jquery.jpostal.js"></script>
+<script type="text/javascript" src="../jquery.jpostal.js"></script>
 <script type="text/javascript">
 $(window).ready( function() {
 	$('#postcode1').jpostal({
@@ -16,9 +16,11 @@ $(window).ready( function() {
 		address : {
 			'#address1'  : '%3',
 			'#address2'  : '%4',
-			'#address3'  : '%5',
-			'#address4'  : '%6',
-			'#address5'  : '%7',
+			'#address3'  : '%5'
+		},
+		url : {
+			'http'  : '../json/',
+			'https' : '../json/',
 		}
 	});
 });
@@ -26,7 +28,7 @@ $(window).ready( function() {
 </head>
 <body>
 <form>
-<h1>大口事業所</h1>
+<h1>郵便番号欄が2つ</h1>
 	
 <span>郵便番号 〒</span>
 <input id="postcode1" name="postcode1" maxlength="3">-<input id="postcode2" name="postcode2" maxlength="4"><br />
@@ -88,12 +90,6 @@ $(window).ready( function() {
 
 <span>町域</span>
 <input id="address3" name="address3"><br />
-
-<span>番地建物</span>
-<input id="address4" name="address4"><br />
-
-<span>名称</span>
-<input id="address5" name="address5"><br />
 
 <input type="reset"  value="クリア">
 </form>

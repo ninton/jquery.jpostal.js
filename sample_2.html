@@ -5,7 +5,7 @@
 <title>J-POSTAL</title>
 <link rel="stylesheet" type="text/css" href="sample.css" />
 <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-<script type="text/javascript" src="jquery.jpostal.js"></script>
+<script type="text/javascript" src="//jpostal.googlecode.com/svn/trunk/jquery.jpostal.js"></script>
 <script type="text/javascript">
 $(window).ready( function() {
 	$('#postcode1').jpostal({
@@ -15,11 +15,7 @@ $(window).ready( function() {
 		address : {
 			'#address1'  : '%3',
 			'#address2'  : '%4%5',
-		},
-		url : {
-			'http'  : 'json/',
-			'https' : 'json/',
-		},
+		}
 	});
 });
 </script>
@@ -27,12 +23,11 @@ $(window).ready( function() {
 <body>
 <form>
 <h1>郵便番号欄が1つ</h1>
-★付きの項目に自動入力します。<br />
 	
-郵便番号 〒<br />
+<span>郵便番号 〒</span>
 <input id="postcode" name="postcode" maxlength="8"><br />
 
-★都道府県<br />
+<span>都道府県</span>
 <select id="address1" name="address1">
 	<option value="" selected="selected">選択してください 
 	<option value="北海道">北海道
@@ -84,14 +79,8 @@ $(window).ready( function() {
 	<option value="沖縄県">沖縄県 
 </select><br />
 
-★市区町村★町域<br />
+<span>市区町村・町域</span>
 <input id="address2" name="address2"><br />
-
-番地建物<br />
-<input id="address4" name="address4"><br />
-
-名称<br />
-<input id="address5" name="address5"><br />
 
 <input type="reset"  value="クリア">
 </form>
