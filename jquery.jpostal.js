@@ -280,15 +280,62 @@ function Jpostal ( i_JposDb ) {
 				break;
 			
 			case 1:
-				s = $(this.options.postcode[0]).val();
+				//	github issue #8: 1つ目を空欄、2つ目を「001」としても、「001」として北海道札幌市を表示してしまう
+				//	----------------------------------------
+				//	case	postcode	result
+				//	----------------------------------------
+				//	1		''			''
+				//	1		12			''
+				//	2		123			123
+				//	2		123-		123
+				//	2		123-4		123
+				//	3		123-4567	1234567
+				//	2		1234		123
+				//	4		1234567		1234567
+				//	----------------------------------------
+				s = String($(this.options.postcode[0]).val());
+				if ( 0 <= s.search(/^([0-9]{3})([0-9A-Za-z]{4})/) ) {
+					// case 4
+					s = RegExp.$1 + '' +  RegExp.$2;
+				} else if ( 0 <= s.search(/^([0-9]{3})-([0-9A-Za-z]{4})/) ) {
+					// case 3
+					s = RegExp.$1 + '' +  RegExp.$2;
+				} else if ( 0 <= s.search(/^([0-9]{3})/) ) {
+					// case 2
+					s = RegExp.$1;
+				} else {
+					// case 1
+					s = '';
+				}
 				break;
 			
 			case 2:
-				s = $(this.options.postcode[0]).val() + $(this.options.postcode[1]).val()
+				//	github issue #8: 1つ目を空欄、2つ目を「001」としても、「001」として北海道札幌市を表示してしまう
+				//	----------------------------------------
+				//	case	post1	post2	result
+				//	----------------------------------------
+				//	1		''		---		''
+				//	1		12		---		''
+				//	2		123		''		123
+				//	2		123		4		123
+				//	3		123		4567	1234567
+				//	----------------------------------------
+				var s3 = String($(this.options.postcode[0]).val());
+				var s4 = String($(this.options.postcode[1]).val());
+				if ( 0 <= s3.search(/^[0-9]{3}$/) ) {
+					if ( 0 <= s4.search(/^[0-9A-Za-z]{4}$/) ) {
+						// case 3
+						s = s3 + s4;					
+					} else {
+						// case 2
+						s = s3;
+					}
+				} else {
+					// case 1
+					s = '';
+				}
 				break;
 		}
-
-		s = s.replace( /-/, '' );
 		
 		this.postcode = s;
 	};	
