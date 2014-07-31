@@ -44,7 +44,7 @@ function JpostalDatabase ( i_options ) {
 		//	1234567		N		Y		find( '123' )
 		//	1234567		N		N		defaults
 		//	--------------------------------------------------
-		var defaults = ['', '', '', '', ''];
+		var defaults = ['', '', '', '', '', ''];
 		var	address;
 		var	head3;
 		
@@ -197,6 +197,7 @@ function Jpostal ( i_JposDb ) {
 			this.address[2] += ' ' + this.getScriptSrc();
 		}
 		
+		console.log( this.address );
 		for ( var key in this.options.address ) {
 			var s = this.formatAddress( this.options.address[key], this.address );
 			$(key).val( s );
