@@ -16,7 +16,10 @@ $(window).ready( function() {
 		address : {
 			'#address1'  : '%3',
 			'#address2'  : '%4',
-			'#address3'  : '%5'
+			'#address3'  : '%5',
+			'#address1_kana'  : '%8',
+			'#address2_kana'  : '%9',
+			'#address3_kana'  : '%10'
 		},
 		url : {
 			'http'  : '../json/',
@@ -90,6 +93,13 @@ $(window).ready( function() {
 
 <span>町域</span>
 <input id="address3" name="address3"><br />
+
+<span>都道府県カナ</span>
+<input id="address1_kana" name="address1_kana"><br />
+<span>市区町村カナ</span>
+<input id="address2_kana" name="address2_kana"><br />
+<span>町域カナ</span>
+<input id="address3_kana" name="address3_kana"><br />
 
 <input type="reset"  value="クリア">
 </form>

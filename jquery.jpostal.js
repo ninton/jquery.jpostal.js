@@ -44,7 +44,7 @@ function JpostalDatabase ( i_options ) {
 		//	1234567		N		Y		find( '123' )
 		//	1234567		N		N		defaults
 		//	--------------------------------------------------
-		var defaults = ['', '', '', '', '', ''];
+		var defaults = ['', '', '', '', '', '', '', '', ''];
 		var	address;
 		var	head3;
 		
@@ -212,6 +212,10 @@ function Jpostal ( i_JposDb ) {
 		s = s.replace( /%5|%t|%town/      , i_address[3] );
 		s = s.replace( /%6|%a|%address/   , i_address[4] );
 		s = s.replace( /%7|%n|%name/      , i_address[5] );
+		
+		s = s.replace( /%8/      , i_address[6] );
+		s = s.replace( /%9/      , i_address[7] );
+		s = s.replace( /%10/      , i_address[8] );
 		
 		return s;
 	};
