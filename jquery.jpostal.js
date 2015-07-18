@@ -13,8 +13,8 @@ function JpostalDatabase ( i_options ) {
 	this.map     = {
 	};
 	this.url     = {
-		'http'  : '//jpostal.googlecode.com/svn/trunk/json/',
-		'https' : '//jpostal.googlecode.com/svn/trunk/json/',
+		'http'  : '//jpostal-1006.appspot.com/json/',
+		'https' : '//jpostal-1006.appspot.com/json/',
 	};
 	
 	this.find = function ( i_postcode ) {

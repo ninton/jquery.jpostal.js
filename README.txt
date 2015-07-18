@@ -8,7 +8,7 @@ Requirements
 jquery.js
 
 郵便番号を入力すると住所欄へ自動入力するjQueryプラグインです。
-jpostal.googlecode.comで公開していますので、jquery.jpostal.jsやjson/*.jsonを設置する必要がありません。
+jpostal-1006.appspot.comで公開していますので、jquery.jpostal.jsやjson/*.jsonを設置する必要がありません。
 サイト運営者の定期的な郵便データ更新作業も必要ありません。
 
 --------------------------------------------------
@@ -17,7 +17,7 @@ jpostal.googlecode.comで公開していますので、jquery.jpostal.jsやjson/
 (sample_1.html)
 
 <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-<script type="text/javascript" src="//jpostal.googlecode.com/svn/trunk/jquery.jpostal.js"></script>
+<script type="text/javascript" src="//jpostal-1006.appspot.com/jquery.jpostal.js"></script>
 <script type="text/javascript">
 $(window).ready( function() {
 	$('#postcode1').jpostal({
@@ -40,7 +40,7 @@ $(window).ready( function() {
 
   例
   <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-  <script type="text/javascript" src="//jpostal.googlecode.com/svn/trunk/jquery.jpostal.js"></script>
+  <script type="text/javascript" src="//jpostal-1006.appspot.com/jquery.jpostal.js"></script>
 
 2. jpostalプラグイン呼び出しを記述してください。
 
