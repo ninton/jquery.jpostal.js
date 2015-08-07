@@ -1,5 +1,5 @@
 /**
- * jquery.jpostal.js ver2.2
+ * jquery.jpostal.js ver2.7
  * 
  * Copyright 2014, Aoki Makoto, Ninton G.K. http://www.ninton.co.jp
  * 
@@ -197,7 +197,6 @@ function Jpostal ( i_JposDb ) {
 			this.address[2] += ' ' + this.getScriptSrc();
 		}
 		
-		console.log( this.address );
 		for ( var key in this.options.address ) {
 			var s = this.formatAddress( this.options.address[key], this.address );
 			$(key).val( s );
