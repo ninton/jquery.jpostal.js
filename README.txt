@@ -11,6 +11,11 @@ jquery.js
 jpostal-1006.appspot.comで公開していますので、jquery.jpostal.jsやjson/*.jsonを設置する必要がありません。
 サイト運営者の定期的な郵便データ更新作業も必要ありません。
 
+都道府県をSELECTタグで表示する場合、OPTIONタグのvalueは次のどれでもかまいません。
+<option value="北海道">北海道</option>
+<option value="1">北海道</option>
+<option value="01">北海道</option>
+
 --------------------------------------------------
 使用例
 --------------------------------------------------
