@@ -199,10 +199,62 @@ function Jpostal ( i_JposDb ) {
 		
 		for ( var key in this.options.address ) {
 			var s = this.formatAddress( this.options.address[key], this.address );
-			$(key).val( s );
+			if ( this.isSelectTagForPrefecture( key, this.options.address[key] ) ) {
+				this.setSelectTagForPrefecture( key, s );
+			} else {
+				$(key).val( s );
+			}
 		}
 	};
 	
+	this.isSelectTagForPrefecture = function( i_key, i_fmt ) {
+		// 都道府県のSELECTタグか？
+		switch ( i_fmt ) {
+			case '%3':
+			case '%p':
+			case '%prefecture':
+				if ( $(i_key).get(0).tagName.toUpperCase() == 'SELECT' ) {
+					f = true;
+				} else {
+					f = false;
+				}	
+				break;
+
+			default:
+				f = false;
+				break;
+		}
+		return f;
+	}
+
+	this.setSelectTagForPrefecture = function ( i_key, i_value ) {
+		// 都道府県のSELECTタグ
+		// ケース1: <option value="東京都">東京都</option>
+		$(i_key).val(i_value);
+		if ( $(i_key).val() == i_value ) {
+			return;
+		}
+
+		// ケース2: valueが数値(自治体コードの場合が多い)
+		//	テキストが「北海道」を含むかどうかで判断する
+		//	<option value="01">北海道(01)</option>
+		//	<option value="1">1.北海道</option>
+		value = '';
+		var el = $(i_key)[0];
+		for ( var i = 0; i < el.options.length; ++i ) {
+			var p = el.options[i].text.indexOf( i_value );
+			if ( 0 <= p ) {
+				value = el.options[i].value;
+				break;
+			}
+		}
+
+		if ( value != '' ) {
+			$(i_key).val( value );
+		}
+
+	}
+
 	this.formatAddress = function ( i_fmt, i_address ) {
 		var	s = i_fmt;
 		
