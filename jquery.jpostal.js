@@ -250,7 +250,7 @@ function Jpostal ( i_JposDb ) {
 		}
 
 		if ( value != '' ) {
-			$(i_key).val( value );
+			$(i_key).val( value ).trigger("change");
 		}
 
 	}
