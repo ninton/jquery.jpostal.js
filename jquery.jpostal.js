@@ -80,11 +80,11 @@ function JpostalDatabase ( i_options ) {
 		
 		switch ( window.location.protocol ) {
 			case 'http:':
-				url = this.url['http'];
+				url = this.url.http;
 				break;
 			
 			case 'https:':
-				url = this.url['https'];
+				url = this.url.https;
 				break;
 		}
 		url = url + i_head3 + '.json';
@@ -225,7 +225,7 @@ function Jpostal ( i_JposDb ) {
 				break;
 		}
 		return f;
-	}
+	};
 
 	this.setSelectTagForPrefecture = function ( i_key, i_value ) {
 		// 都道府県のSELECTタグ
@@ -249,11 +249,11 @@ function Jpostal ( i_JposDb ) {
 			}
 		}
 
-		if ( value != '' ) {
+		if ( value !== '' ) {
 			$(i_key).val( value );
 		}
 
-	}
+	};
 
 	this.formatAddress = function ( i_fmt, i_address ) {
 		var	s = i_fmt;
@@ -282,7 +282,7 @@ function Jpostal ( i_JposDb ) {
 		}
 
 		return src;
-	}
+	};
 
 	this.init = function ( i_options ) {
 		
@@ -415,13 +415,18 @@ function jQuery_jpostal_callback( i_data ) {
 		var Jpos = new Jpostal( JposDb );
 		Jpos.init( i_options );
 		
-		if ( typeof i_options.click == 'string' && i_options.click != '' ) {
+		if ( typeof i_options.click == 'string' && i_options.click !== '' ) {
 			$(i_options.click).bind('click', function(e) {
 				Jpos.main();
 			});			
 		} else {
-			for ( var i = 0; i < Jpos.options.postcode.length; ++i ) {
-				var selector = Jpos.options.postcode[i];
+			var selector = Jpos.options.postcode[0];
+			$(selector).bind('keyup change', function(e) {
+				Jpos.main();
+			});
+			
+			if (1 <= Jpos.options.postcode.length) {
+				selector = Jpos.options.postcode[1];
 				$(selector).bind('keyup change', function(e) {
 					Jpos.main();
 				});
