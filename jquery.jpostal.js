@@ -11,192 +11,209 @@
  * Requirements
  * jquery.js
  */
-var JpostalDatabase = function () {
+var Jpostal = {};
+
+Jpostal.Database = (function() {
 	"use strict";
 
-	var self = {};
+	var instance,
+	    newInstance;
 
-	self.address = [];	// database cache
-	self.map     = {
-	};
-	self.url     = {
-		'http'  : '//jpostal-1006.appspot.com/json/',
-		'https' : '//jpostal-1006.appspot.com/json/'
-	};
-	
-	self.find = function ( i_postcode ) {
-		var	address = [];
+	newInstance = function () {
+		var self = {};
+
+		self.address = [];	// database cache
+		self.map     = {
+		};
+		self.url     = {
+			'http'  : '//jpostal-1006.appspot.com/json/',
+			'https' : '//jpostal-1006.appspot.com/json/'
+		};
 		
-		self.address.forEach(function(eachAddress, ignore) {
-			if ( eachAddress[0] === '_' + i_postcode ) {
-				address = eachAddress;
-			}
-		});
+		self.find = function ( i_postcode ) {
+			var	address = [];
+
+			self.address.forEach(function(eachAddress, ignore) {
+				if ( eachAddress[0] === '_' + i_postcode ) {
+					address = eachAddress;
+				}
+			});
+
+			return address;
+		};
 		
-		return address;
-	};
-	
-	self.get = function ( i_postcode ) {
-		//	--------------------------------------------------
-		//	i_postcode	find()	find()	result
-		//				1234567	123
-		//	--------------------------------------------------
-		//	1			-		-		defaults
-		//	12			-		-		defaults
-		//	123			-		Y		find( '123' )
-		//	123			-		N		defaults
-		//	1234		-		Y		find( '123' )
-		//	1234		-		N		defaults
-		//	1234567		Y		-		find( '1234567' )
-		//	1234567		N		Y		find( '123' )
-		//	1234567		N		N		defaults
-		//	--------------------------------------------------
-		var defaults = ['', '', '', '', '', '', '', '', ''],
-			address,
-			head3;
-		
-		switch ( i_postcode.length ) {
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-				head3 = i_postcode.substr(0, 3);
-				address = self.find(head3);
-				address = $.extend( defaults, address );
-				break;
-				
-			case 7:
-				address = self.find(i_postcode);
-				if ( !address ) {
+		self.get = function ( i_postcode ) {
+			//	--------------------------------------------------
+			//	i_postcode	find()	find()	result
+			//				1234567	123
+			//	--------------------------------------------------
+			//	1			-		-		defaults
+			//	12			-		-		defaults
+			//	123			-		Y		find( '123' )
+			//	123			-		N		defaults
+			//	1234		-		Y		find( '123' )
+			//	1234		-		N		defaults
+			//	1234567		Y		-		find( '1234567' )
+			//	1234567		N		Y		find( '123' )
+			//	1234567		N		N		defaults
+			//	--------------------------------------------------
+			var defaults = ['', '', '', '', '', '', '', '', ''],
+				address,
+				head3;
+
+			switch ( i_postcode.length ) {
+				case 3:
+				case 4:
+				case 5:
+				case 6:
 					head3 = i_postcode.substr(0, 3);
 					address = self.find(head3);
-				}
-				address = $.extend( defaults, address );
-				break;
-			
-			default:
-				address = defaults;
-				break;
-		}
-		
-		return address;
-	};
+					address = $.extend( defaults, address );
+					break;
 
-	self.getUrl = function ( i_head3 ) {
-		var url = '';
-		
-		switch ( window.location.protocol ) {
-			case 'http:':
-				url = self.url.http;
-				break;
-			
-			case 'https:':
-				url = self.url.https;
-				break;
-		}
-		url = url + i_head3 + '.json';
-		
-		return url;
-	};
+				case 7:
+					address = self.find(i_postcode);
+					if ( !address ) {
+						head3 = i_postcode.substr(0, 3);
+						address = self.find(head3);
+					}
+					address = $.extend( defaults, address );
+					break;
 
-	self.request = function ( i_postcode, i_callback ) {
-		var head3,
-			url,
-			options;
-
-		head3 = i_postcode.substr(0, 3);
-		
-		if ( i_postcode.length <= 2 || self.getStatus(head3) !== 'none' || head3.match(/\D/) ) {
-			return false;
-		}
-		self.setStatus(head3, 'waiting');
-		
-		url = self.getUrl( head3 );
-		
-		options = {
-			async         : false,
-			dataType      : 'jsonp',
-			jsonpCallback : 'jQuery_jpostal_callback',
-			type          : 'GET',
-			url           : url,
-			success       : function() {	// function(i_data, i_dataType
-				i_callback();
-			},
-			error         : function() { // function(i_XMLHttpRequest, i_textStatus, i_errorThrown) {
-			},
-			timeout : 5000	// msec
-		};
-		$.ajax( options );
-		return true;
-	};
-	
-	self.save = function ( i_data ) {
-		i_data.forEach(function(rcd, ignore) {
-			var postcode = rcd[0];
-			
-			if ( self.map[postcode] === undefined ) {
-				self.address.push( rcd );
-				self.map[postcode] = {state : 'complete', time : 0};
-			} else if ( self.map[postcode].state === 'waiting' ) {
-				self.address.push( rcd );
-				self.map[postcode].state = 'complete';
-			}			
-		});		
-	};
-
-	self.getStatus = function ( i_postcode ) {
-		//	--------------------------------------------------
-		//	#	['_001']	..state		.time		result
-		//	--------------------------------------------------
-		//	1	 =undefined	-			-			none
-		//	2	!=undefined	'complete'	-			complete
-		//	3	!=undefined	'waiting'	<5sec		waiting
-		//	4	!=undefined	'waiting'	>=5sec		none
-		//	--------------------------------------------------
-		var st = '',
-			postcode = '_' + i_postcode,
-			t_ms;
-		
-		if ( self.map[postcode] === undefined ) {
-			// # 1
-			st = 'none';
-			
-		} else if ( 'complete' === self.map[postcode].state ) {
-			// # 2
-			st = 'complete';
-			
-		} else {
-			t_ms = (new Date()).getTime() - self.map[postcode].time;
-			if ( t_ms < 5000 ) {
-				// # 3
-				st = 'waiting';
-			
-			} else {
-				// # 4
-				st = 'none';
+				default:
+					address = defaults;
+					break;
 			}
-		}
-		
-		return st;
-	};
-	
-	self.setStatus = function ( i_postcode ) {
-		var	postcode = '_' + i_postcode;
-		
-		if ( self.map[postcode] === undefined ) {
-			self.map[postcode] = {
-				state : 'waiting',
-				time  : 0
+			
+			return address;
+		};
+
+		self.getUrl = function ( i_head3 ) {
+			var url = '';
+
+			switch ( window.location.protocol ) {
+				case 'http:':
+					url = self.url.http;
+					break;
+
+				case 'https:':
+					url = self.url.https;
+					break;
+			}
+			url = url + i_head3 + '.json';
+
+			return url;
+		};
+
+		self.request = function ( i_postcode, i_callback ) {
+			var head3,
+				url,
+				options;
+
+			head3 = i_postcode.substr(0, 3);
+			
+			if ( i_postcode.length <= 2 || self.getStatus(head3) !== 'none' || head3.match(/\D/) ) {
+				return false;
+			}
+			self.setStatus(head3, 'waiting');
+			
+			url = self.getUrl( head3 );
+			
+			options = {
+				async         : false,
+				dataType      : 'jsonp',
+				jsonpCallback : 'jQuery_jpostal_callback',
+				type          : 'GET',
+				url           : url,
+				success       : function() {	// function(i_data, i_dataType
+					i_callback();
+				},
+				error         : function() { // function(i_XMLHttpRequest, i_textStatus, i_errorThrown) {
+				},
+				timeout : 5000	// msec
 			};
-		}
-		
-		self.map[postcode].time = (new Date()).getTime();
+			$.ajax( options );
+			return true;
+		};
+
+		self.save = function ( i_data ) {
+			i_data.forEach(function(rcd, ignore) {
+				var postcode = rcd[0];
+
+				if ( self.map[postcode] === undefined ) {
+					self.address.push( rcd );
+					self.map[postcode] = {state : 'complete', time : 0};
+				} else if ( self.map[postcode].state === 'waiting' ) {
+					self.address.push( rcd );
+					self.map[postcode].state = 'complete';
+				}
+			});
+		};
+
+		self.getStatus = function ( i_postcode ) {
+			//	--------------------------------------------------
+			//	#	['_001']	..state		.time		result
+			//	--------------------------------------------------
+			//	1	 =undefined	-			-			none
+			//	2	!=undefined	'complete'	-			complete
+			//	3	!=undefined	'waiting'	<5sec		waiting
+			//	4	!=undefined	'waiting'	>=5sec		none
+			//	--------------------------------------------------
+			var st = '',
+				postcode = '_' + i_postcode,
+				t_ms;
+
+			if ( self.map[postcode] === undefined ) {
+				// # 1
+				st = 'none';
+
+			} else if ( 'complete' === self.map[postcode].state ) {
+				// # 2
+				st = 'complete';
+
+			} else {
+				t_ms = (new Date()).getTime() - self.map[postcode].time;
+				if ( t_ms < 5000 ) {
+					// # 3
+					st = 'waiting';
+
+				} else {
+					// # 4
+					st = 'none';
+				}
+			}
+
+			return st;
+		};
+
+		self.setStatus = function ( i_postcode ) {
+			var	postcode = '_' + i_postcode;
+
+			if ( self.map[postcode] === undefined ) {
+				self.map[postcode] = {
+					state : 'waiting',
+					time  : 0
+				};
+			}
+
+			self.map[postcode].time = (new Date()).getTime();
+		};
+
+		return self;
 	};
 
-	return self;
-};
+	return {
+		getInstance: function () {
+			if (!instance) {
+				instance = newInstance();
+			}
+			return instance;
+		}
+	};
+}());
 
-var Jpostal = function ( i_JposDb ) {
+
+Jpostal.Jpostal = function ( i_JposDb ) {
 	"use strict";
 
 	var self = {};
@@ -206,7 +223,7 @@ var Jpostal = function ( i_JposDb ) {
 	self.options  = {};
 	self.postcode = '';
 	self.minLen   = 3;
-	
+
 	self.displayAddress = function () {
 		if ( self.postcode === '000info') {
 			self.address[2] += ' ' + self.getScriptSrc();
@@ -327,7 +344,7 @@ var Jpostal = function ( i_JposDb ) {
 			self.jposDb.url = i_options.url;
 		}
 	};
-	
+
 	self.main = function () {
 		var that,
 			f;
@@ -432,12 +449,10 @@ var Jpostal = function ( i_JposDb ) {
 //	001.js		JposDb.save			global scope
 //	001.js.php	$_GET['callback']	local scopde for function($){}
 //	---------------------------------------------------------------------
-var JposDb = new JpostalDatabase();
-
 var jQuery_jpostal_callback = function ( i_data ) {
 	"use strict";
 
-	JposDb.save( i_data );	
+	Jpostal.Database.getInstance().save( i_data );
 };
 
 (function($) {
@@ -447,7 +462,7 @@ var jQuery_jpostal_callback = function ( i_data ) {
 		var Jpos,
 			selector;
 
-		Jpos = new Jpostal( JposDb );
+		Jpos = new Jpostal.Jpostal( Jpostal.Database.getInstance() );
 		Jpos.init( i_options );
 		
 		if ( typeof i_options.click === 'string' && i_options.click !== '' ) {
