@@ -73,7 +73,7 @@ Jpostal.Database = (function() {
 
                 case 7:
                     address = self.find(i_postcode);
-                    if ( !address ) {
+                    if ( address.length === 0 ) {
                         head3 = i_postcode.substr(0, 3);
                         address = self.find(head3);
                     }
@@ -91,7 +91,7 @@ Jpostal.Database = (function() {
         self.getUrl = function ( i_head3 ) {
             var url = '';
 
-            switch ( window.location.protocol ) {
+            switch ( self.getProtocol() ) {
                 case 'http:':
                     url = self.url.http;
                     break;
@@ -172,7 +172,7 @@ Jpostal.Database = (function() {
                 st = 'complete';
 
             } else {
-                t_ms = (new Date()).getTime() - self.map[postcode].time;
+                t_ms = self.getTime() - self.map[postcode].time;
                 if ( t_ms < 5000 ) {
                     // # 3
                     st = 'waiting';
@@ -186,7 +186,7 @@ Jpostal.Database = (function() {
             return st;
         };
 
-        self.setStatus = function ( i_postcode ) {
+        self.setStatus = function (i_postcode) {
             var    postcode = '_' + i_postcode;
 
             if ( self.map[postcode] === undefined ) {
@@ -196,7 +196,15 @@ Jpostal.Database = (function() {
                 };
             }
 
-            self.map[postcode].time = (new Date()).getTime();
+            self.map[postcode].time = self.getTime();
+        };
+
+        self.getProtocol = function () {
+            return window.location.protocol;
+        };
+
+        self.getTime = function () {
+            return (new Date()).getTime();
         };
 
         return self;
