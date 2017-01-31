@@ -50,8 +50,8 @@ YUI({logInclude: {TestRunner: true}}).use("test", "console", "test-console", "ph
         Y.Test.Runner.add(new Y.Test.Case({
             name: "Jspotal.Database",
 
-            "Database: object": function () {
-                areSame("object", typeof Jpostal.Database);
+            "Database: function": function () {
+                areSame("function", typeof Jpostal.Database);
             },
 
             "getInstance: function": function () {
