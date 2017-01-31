@@ -132,8 +132,14 @@ Jpostal.Database.prototype.request = function (i_postcode, i_callback) {
         },
         timeout : 5000    // msec
     };
-    $.ajax(options);
+    this.ajax(options);
     return true;
+};
+
+Jpostal.Database.prototype.ajax = function (options) {
+    "use strict";
+
+    $.ajax(options);
 };
 
 Jpostal.Database.prototype.save = function (i_data) {
@@ -300,7 +306,7 @@ Jpostal.Jpostal = function (i_JposDb) {
         value = '';
         el = $(i_key)[0];
         Object.keys(el.options).forEach(function (i) {
-            var p = el.options[i].text.indexOf(i_value);
+            var p = String(el.options[i].text).indexOf(i_value);
             if (0 <= p) {
                 value = el.options[i].value;
             }
@@ -330,15 +336,20 @@ Jpostal.Jpostal = function (i_JposDb) {
 
     self.getScriptSrc = function () {
         var src = '',
-            el_arr;
+            el_arr,
+            i,
+            n,
+            el_src;
 
         el_arr = document.getElementsByTagName('script');
-        Object.keys(el_arr).forEach(function (key) {
-            var el = el_arr[key];
-            if (0 <= el.src.search(/jquery\.jpostal\.js/)) {
-                src = el.src;
+        n = el_arr.length;
+        for (i = 0; i < n; i += 1) {
+            el_src = el_arr[i].src;
+            if (0 <= el_src.indexOf("jquery.jpostal.js")) {
+                src = el_src;
+                break;
             }
-        });
+        }
 
         return src;
     };
