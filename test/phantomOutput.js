@@ -1,8 +1,8 @@
-/*jslint */
 /*global YUI*/
-"use strict";
 
 YUI().add("phantomjs", function (Y) {
+    "use strict";
+
     var TR;
     if (console !== undefined) {
         TR = Y.Test.Runner;

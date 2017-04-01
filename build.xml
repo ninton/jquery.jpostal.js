@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jqeury.jpostal.js" default="all">
+	<loadproperties srcfile="build.properties" />
+
+	<tstamp>
+		<format property="build.time"
+			    pattern="yyyy-MM-dd-hh-mm-ss"
+			    locale="ja,JP" />
+	</tstamp>
+
+	<target name="prop">
+		<echo>Version is ${version}</echo>
+		<echo>src.dir is ${src.dir}</echo>
+		<echo>build.dir is ${build.dir}</echo>
+		<echo>lib.dir is ${lib.dir}</echo>
+		<echo>test.dir is ${test.dir}</echo>
+		<echo>build.time is ${build.time}</echo>
+	</target>
+
+	<target name="version">
+		<echo>${version}</echo>
+	</target>
+
+	
+	<target name="all">
+		<echo message="Project build start."/>
+    	<antcall target="prop"/>
+    	<antcall target="clean"/>
+    	<antcall target="init"/>
+    	<antcall target="jshint"/>
+    	<antcall target="jslint"/>
+    	<antcall target="test"/>
+    	<antcall target="build"/>
+    	<echo message="Project build end."/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${testresult.dir}"/>
+	</target>
+
+	<target name="init">
+		<exec executable="mkdir" failonerror="true">
+			<arg line="-p" />
+			<arg line="${testresult.dir}" />
+		</exec>
+	</target>
+
+	<target name="jshint">
+		<apply executable="jshint" failonerror="true" parallel="true">
+			<fileset dir="${src.dir}" includes="**/*.js" />
+			<fileset dir="${test.dir}" includes="**/*.js" />
+			<srcfile />
+		</apply>
+	</target>
+
+	<target name="jslint">
+		<apply executable="jslint" failonerror="true" parallel="true">
+			<fileset dir="${src.dir}" includes="**/*.js" />
+			<fileset dir="${test.dir}" includes="**/*.js" />
+			<arg line="--edition es5" />
+			<srcfile />
+		</apply>
+	</target>
+
+	<target name="test">
+		<apply executable="./js_test.sh" failonerror="true">
+			<fileset dir="${test.dir}" excludes="">
+				<depth max="5"/>
+				<filename name="test*.html"/>
+			</fileset>
+			<arg line="${testresult.dir}" />
+			<srcfile />
+		</apply>
+
+		<!--  grep "<failure"  testResults/testSeleniumGosub.xml -->
+		<exec executable="./is_test_passed.sh" failonerror="true">
+			<arg line="${testresult.dir}/*.xml"/>
+		</exec>
+	</target>
+
+	<target name="build">
+	</target>
+</project>
