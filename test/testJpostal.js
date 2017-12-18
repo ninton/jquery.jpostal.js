@@ -110,7 +110,13 @@ YUI({logInclude: {TestRunner: true}}).use("test", "console", "test-console", "ph
                         '#address5'  : '%7',
                         '#address1_kana'  : '%8',
                         '#address2_kana'  : '%9',
-                        '#address3_kana'  : '%10'
+                        '#address3_kana'  : '%10',
+                        '#address1_kana_zen_hira'  : '%11',
+                        '#address2_kana_zen_hira'  : '%12',
+                        '#address3_kana_zen_hira'  : '%13',
+                        '#address1_kana_zen_kata'  : '%14',
+                        '#address2_kana_zen_kata'  : '%15',
+                        '#address3_kana_zen_kata'  : '%16'
                     }
                 };
 
@@ -128,6 +134,14 @@ YUI({logInclude: {TestRunner: true}}).use("test", "console", "test-console", "ph
                 areSame("ﾄｳｷｮｳﾄ",   document.getElementById("address1_kana").value);
                 areSame("ﾁﾖﾀﾞｸ",    document.getElementById("address2_kana").value);
                 areSame("ﾁﾖﾀﾞ",     document.getElementById("address3_kana").value);
+
+                areSame("とうきょうと", document.getElementById("address1_kana_zen_hira").value);
+                areSame("ちよだく",     document.getElementById("address2_kana_zen_hira").value);
+                areSame("ちよだ",       document.getElementById("address3_kana_zen_hira").value);
+
+                areSame("トウキョウト", document.getElementById("address1_kana_zen_kata").value);
+                areSame("チヨダク",     document.getElementById("address2_kana_zen_kata").value);
+                areSame("チヨダ",       document.getElementById("address3_kana_zen_kata").value);
             },
 
             "isSelectTagForPrefecture: positive": function () {
