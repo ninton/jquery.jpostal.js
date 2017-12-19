@@ -1,0 +1,30 @@
+{
+  "name": "jquery-jpostal-ja",
+  "version": "2.9.7",
+  "description": "(DEVELOP) A jQuery plug-in that automatically enters a japanese zip code into the address field when you enter it.",
+  "peerDependencies": {
+    "jquery": "*"
+  },
+  "main": "jquery.jpostal.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ninton/jquery.jpostal.js.git"
+  },
+  "keywords": [
+    "zip",
+    "address",
+    "jquery"
+  ],
+  "author": "Ninton G.K.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ninton/jquery.jpostal.js/issues"
+  },
+  "homepage": "https://github.com/ninton/jquery.jpostal.js#readme"
+}
