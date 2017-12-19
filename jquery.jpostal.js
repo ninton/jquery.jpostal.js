@@ -496,13 +496,23 @@ Jpostal.Jpostal.prototype.scanPostcode = function () {
 //    001.js        JposDb.save            global scope
 //    001.js.php    $_GET['callback']    local scopde for function($){}
 //    ---------------------------------------------------------------------
-var jQuery_jpostal_callback = function (i_data) {
+window.jQuery_jpostal_callback = function (i_data) {
     "use strict";
 
     Jpostal.Database.getInstance().save(i_data);
 };
 
-(function ($) {
+
+(function (factory) {
+    "use strict";
+
+    if (typeof module === "object" && typeof module.exports === "object") {
+        module.exports = factory(require("jquery"), window, document);
+    } else {
+        factory(jQuery, window, document);
+    }
+//}(function ($, window, document, undefined) {
+}(function ($) {
     "use strict";
 
     $.fn.jpostal = function (i_options) {
@@ -530,4 +540,5 @@ var jQuery_jpostal_callback = function (i_data) {
             }
         }
     };
-}(jQuery));
+
+}));
