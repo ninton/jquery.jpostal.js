@@ -328,19 +328,7 @@ Jpostal.Jpostal.prototype.setSelectTagForPrefecture = function (i_key, i_value) 
 Jpostal.Jpostal.prototype.formatAddress = function (i_fmt, i_address) {
     "use strict";
 
-    var s = i_fmt,
-        zen_hira,
-        zen_kata;
-
-    zen_hira = [];
-    zen_hira[0] = this.hankana_to_zenhira(i_address[6]);
-    zen_hira[1] = this.hankana_to_zenhira(i_address[7]);
-    zen_hira[2] = this.hankana_to_zenhira(i_address[8]);
-
-    zen_kata = [];
-    zen_kata[0] = this.hankana_to_zenkata(i_address[6]);
-    zen_kata[1] = this.hankana_to_zenkata(i_address[7]);
-    zen_kata[2] = this.hankana_to_zenkata(i_address[8]);
+    var s = i_fmt;
 
     s = s.replace(/%3|%p|%prefecture/, i_address[1]);
     s = s.replace(/%4|%c|%city/,       i_address[2]);
@@ -352,95 +340,8 @@ Jpostal.Jpostal.prototype.formatAddress = function (i_fmt, i_address) {
     s = s.replace(/%9/,  i_address[7]);
     s = s.replace(/%10/, i_address[8]);
 
-    s = s.replace(/%11/, zen_hira[0]);
-    s = s.replace(/%12/, zen_hira[1]);
-    s = s.replace(/%13/, zen_hira[2]);
-
-    s = s.replace(/%14/, zen_kata[0]);
-    s = s.replace(/%15/, zen_kata[1]);
-    s = s.replace(/%16/, zen_kata[2]);
-
     return s;
 };
-
-Jpostal.Jpostal.prototype.hankana_to_zenhira = function (i_str) {
-    var map,
-        reg;
-    
-    map = {
-        'ｶﾞ': 'が', 'ｷﾞ': 'ぎ', 'ｸﾞ': 'ぐ', 'ｹﾞ': 'げ', 'ｺﾞ': 'ご',
-        'ｻﾞ': 'ざ', 'ｼﾞ': 'じ', 'ｽﾞ': 'ず', 'ｾﾞ': 'ぜ', 'ｿﾞ': 'ぞ',
-        'ﾀﾞ': 'だ', 'ﾁﾞ': 'ぢ', 'ﾂﾞ': 'づ', 'ﾃﾞ': 'で', 'ﾄﾞ': 'ど',
-        'ﾊﾞ': 'ば', 'ﾋﾞ': 'び', 'ﾌﾞ': 'ぶ', 'ﾍﾞ': 'べ', 'ﾎﾞ': 'ぼ',
-        'ﾊﾟ': 'ぱ', 'ﾋﾟ': 'ぴ', 'ﾌﾟ': 'ぷ', 'ﾍﾟ': 'ぺ', 'ﾎﾟ': 'ぽ',
-        'ｳﾞ': 'う゛', 'ﾜﾞ': 'わ゛', 'ｦﾞ': 'を゛',
-        'ｱ': 'あ', 'ｲ': 'い', 'ｳ': 'う', 'ｴ': 'え', 'ｵ': 'お',
-        'ｶ': 'か', 'ｷ': 'き', 'ｸ': 'く', 'ｹ': 'け', 'ｺ': 'こ',
-        'ｻ': 'さ', 'ｼ': 'し', 'ｽ': 'す', 'ｾ': 'せ', 'ｿ': 'そ',
-        'ﾀ': 'た', 'ﾁ': 'ち', 'ﾂ': 'つ', 'ﾃ': 'て', 'ﾄ': 'と',
-        'ﾅ': 'な', 'ﾆ': 'に', 'ﾇ': 'ぬ', 'ﾈ': 'ね', 'ﾉ': 'の',
-        'ﾊ': 'は', 'ﾋ': 'ひ', 'ﾌ': 'ふ', 'ﾍ': 'へ', 'ﾎ': 'ほ',
-        'ﾏ': 'ま', 'ﾐ': 'み', 'ﾑ': 'む', 'ﾒ': 'め', 'ﾓ': 'も',
-        'ﾔ': 'や', 'ﾕ': 'ゆ', 'ﾖ': 'よ',
-        'ﾗ': 'ら', 'ﾘ': 'り', 'ﾙ': 'る', 'ﾚ': 'れ', 'ﾛ': 'ろ',
-        'ﾜ': 'わ', 'ｦ': 'を', 'ﾝ': 'ん',
-        'ｧ': 'ぁ', 'ｨ': 'ぃ', 'ｩ': 'ぅ', 'ｪ': 'ぇ', 'ｫ': 'ぉ',
-        'ｯ': 'っ', 'ｬ': 'ゃ', 'ｭ': 'ゅ', 'ｮ': 'ょ',
-        '｡': '。', '､': '、', 'ｰ': 'ー', '｢': '「', '｣': '」', '･': '・',
-        '(': '（', ')': '）'
-    };
-
-    reg = new RegExp('(' + Object.keys(map).join('|') + ')', 'g');
-
-    str = i_str;
-    str = str.replace(reg, function (match) {
-        return map[match];
-    });
-    str = str.replace(/ﾞ/g, '゛');
-    str = str.replace(/ﾟ/g, '゜');
-    
-    return str;
-};
-
-Jpostal.Jpostal.prototype.hankana_to_zenkata = function (i_str) {
-    var map,
-        reg;
-    
-    map = {
-        'ｶﾞ': 'ガ', 'ｷﾞ': 'ギ', 'ｸﾞ': 'グ', 'ｹﾞ': 'ゲ', 'ｺﾞ': 'ゴ',
-        'ｻﾞ': 'ザ', 'ｼﾞ': 'ジ', 'ｽﾞ': 'ズ', 'ｾﾞ': 'ゼ', 'ｿﾞ': 'ゾ',
-        'ﾀﾞ': 'ダ', 'ﾁﾞ': 'ヂ', 'ﾂﾞ': 'ヅ', 'ﾃﾞ': 'デ', 'ﾄﾞ': 'ド',
-        'ﾊﾞ': 'バ', 'ﾋﾞ': 'ビ', 'ﾌﾞ': 'ブ', 'ﾍﾞ': 'ベ', 'ﾎﾞ': 'ボ',
-        'ﾊﾟ': 'パ', 'ﾋﾟ': 'ピ', 'ﾌﾟ': 'プ', 'ﾍﾟ': 'ペ', 'ﾎﾟ': 'ポ',
-        'ｳﾞ': 'ヴ', 'ﾜﾞ': 'ヷ', 'ｦﾞ': 'ヺ',
-        'ｱ': 'ア', 'ｲ': 'イ', 'ｳ': 'ウ', 'ｴ': 'エ', 'ｵ': 'オ',
-        'ｶ': 'カ', 'ｷ': 'キ', 'ｸ': 'ク', 'ｹ': 'ケ', 'ｺ': 'コ',
-        'ｻ': 'サ', 'ｼ': 'シ', 'ｽ': 'ス', 'ｾ': 'セ', 'ｿ': 'ソ',
-        'ﾀ': 'タ', 'ﾁ': 'チ', 'ﾂ': 'ツ', 'ﾃ': 'テ', 'ﾄ': 'ト',
-        'ﾅ': 'ナ', 'ﾆ': 'ニ', 'ﾇ': 'ヌ', 'ﾈ': 'ネ', 'ﾉ': 'ノ',
-        'ﾊ': 'ハ', 'ﾋ': 'ヒ', 'ﾌ': 'フ', 'ﾍ': 'ヘ', 'ﾎ': 'ホ',
-        'ﾏ': 'マ', 'ﾐ': 'ミ', 'ﾑ': 'ム', 'ﾒ': 'メ', 'ﾓ': 'モ',
-        'ﾔ': 'ヤ', 'ﾕ': 'ユ', 'ﾖ': 'ヨ',
-        'ﾗ': 'ラ', 'ﾘ': 'リ', 'ﾙ': 'ル', 'ﾚ': 'レ', 'ﾛ': 'ロ',
-        'ﾜ': 'ワ', 'ｦ': 'ヲ', 'ﾝ': 'ン',
-        'ｧ': 'ァ', 'ｨ': 'ィ', 'ｩ': 'ゥ', 'ｪ': 'ェ', 'ｫ': 'ォ',
-        'ｯ': 'ッ', 'ｬ': 'ャ', 'ｭ': 'ュ', 'ｮ': 'ョ',
-        '｡': '。', '､': '、', 'ｰ': 'ー', '｢': '「', '｣': '」', '･': '・',
-        '(': '（', ')': '）'
-    };
-
-    reg = new RegExp('(' + Object.keys(map).join('|') + ')', 'g');
-
-    str = i_str;
-    str = str.replace(reg, function (match) {
-        return map[match];
-    });
-    str = str.replace(/ﾞ/g, '゛');
-    str = str.replace(/ﾟ/g, '゜');
-    
-    return str;
-};
-
 
 Jpostal.Jpostal.prototype.getScriptSrc = function () {
     "use strict";
