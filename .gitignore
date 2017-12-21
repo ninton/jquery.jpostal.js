@@ -5,3 +5,6 @@
 .DS_Store
 testResults
 jsmeter
+test_npm/node_modules/*
+test_npm/build
+*.swp

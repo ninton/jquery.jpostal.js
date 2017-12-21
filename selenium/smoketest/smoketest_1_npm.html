@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/jquery.jpostal.js/sample_1.html" />
+<title>smoketest_1_npm</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">smoketest_1</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>${BASE_URL}sample_1.html</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;reset&quot;]</td>
+	<td></td>
+</tr>
+<!--#100-->
+<!--#東京都 千代田区-->
+<tr>
+	<td>type</td>
+	<td>id=postcode1</td>
+	<td>100</td>
+</tr>
+<tr>
+	<td>waitForNotValue</td>
+	<td>id=address1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address1</td>
+	<td>東京都</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address2</td>
+	<td>千代田区</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address1_kana</td>
+	<td>ﾄｳｷｮｳﾄ</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address2_kana</td>
+	<td>ﾁﾖﾀﾞｸ</td>
+</tr>
+<!--#100-0001-->
+<!--#東京都 千代田区 千代田-->
+<tr>
+	<td>type</td>
+	<td>id=postcode2</td>
+	<td>0001</td>
+</tr>
+<tr>
+	<td>waitForNotValue</td>
+	<td>id=address3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address1</td>
+	<td>東京都</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address2</td>
+	<td>千代田区</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address3</td>
+	<td>千代田</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address1_kana</td>
+	<td>ﾄｳｷｮｳﾄ</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address2_kana</td>
+	<td>ﾁﾖﾀﾞｸ</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address3_kana</td>
+	<td>ﾁﾖﾀﾞ</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input[type=&quot;reset&quot;]</td>
+	<td></td>
+</tr>
+<!--#001-0018-->
+<!--#北海道 札幌市北区 北十八条西-->
+<tr>
+	<td>type</td>
+	<td>id=postcode1</td>
+	<td>001</td>
+</tr>
+<tr>
+	<td>waitForNotValue</td>
+	<td>id=address1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address1</td>
+	<td>北海道</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address2</td>
+	<td>札幌市北区</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address1_kana</td>
+	<td>ﾎｯｶｲﾄﾞｳ</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address2_kana</td>
+	<td>ｻｯﾎﾟﾛｼｷﾀｸ</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=postcode2</td>
+	<td>0018</td>
+</tr>
+<tr>
+	<td>waitForNotValue</td>
+	<td>id=address3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address1</td>
+	<td>北海道</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address2</td>
+	<td>札幌市北区</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address3</td>
+	<td>北十八条西</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address1_kana</td>
+	<td>ﾎｯｶｲﾄﾞｳ</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address2_kana</td>
+	<td>ｻｯﾎﾟﾛｼｷﾀｸ</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=address3_kana</td>
+	<td>ｷﾀ18ｼﾞｮｳﾆｼ</td>
+</tr>
+</tbody></table>
+</body>
+</html>

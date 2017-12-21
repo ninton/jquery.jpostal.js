@@ -11,6 +11,9 @@ jquery.js
 jpostal-1006.appspot.comで公開していますので、jquery.jpostal.jsやjson/*.jsonを設置する必要がありません。
 サイト運営者の定期的な郵便データ更新作業も必要ありません。
 
+npmで、jquery-jpostal-jaとして公開しました。
+npmでの使い方は最後。
+
 都道府県をSELECTタグで表示する場合、OPTIONタグのvalueは次のどれでもかまいません。
 <option value="北海道">北海道</option>
 <option value="1">北海道</option>
@@ -224,3 +227,51 @@ url		json/*.jsonのURL
 		'http'  : '//www.example.jp/json/',
 		'https' : '//www.example.jp/json/'
 	}
+
+--------------------------------------------------
+npm 使用例
+--------------------------------------------------
+
+サンプルファイル
+test_npm/sample_1.html
+test_npm/src/main.js
+
+プロジェクトディレクトリで、jqueryとjpostal-jquery-jaをインストールしてください。
+jpostal-jquery-jaをinstallしただけでは、jqueryを自動installされませんので、明示的にjqueryをinstallしてください。
+
+$ npm install jqeury
+$ npm install jpostal-jquery-ja
+
+main.jsの例
+
+$ = require('jquery');
+require('jquery-jpostal-ja');
+
+$(window).ready( function() {
+
+    $('#postcode1').jpostal({   
+        postcode : [
+            '#postcode1',
+            '#postcode2'
+        ],
+        address : {
+            '#address1'  : '%3',
+            '#address2'  : '%4',
+            '#address3'  : '%5',
+            '#address1_kana'  : '%8',
+            '#address2_kana'  : '%9',
+            '#address3_kana'  : '%10'
+        }
+    });
+});
+
+
+htmlの例
+
+<script type="text/javascript" src="build/build.js"></script>
+
+
+ビルドの例
+
+$ browserify src/main.js -o build/build.js
+
