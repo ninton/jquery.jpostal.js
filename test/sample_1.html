@@ -21,13 +21,39 @@ $(window).ready( function() {
 			'#address2_kana'  : '%9',
 			'#address3_kana'  : '%10'
 		},
+		trigger : {
+			'#address1_kana'  : true,
+			'#address2_kana'  : true,
+			'#address3_kana'  : false
+		},
 		url : {
 			'http'  : '../json/',
 			'https' : '../json/',
 		}
 	});
+
+	$("#address1_kana").on("change", function() {
+	    var val = $("#address1_kana").val();
+	    val = "onchange_" + val;
+	    $("#address1_kana_onchange").val(val);
+	});
+
+	$("#address2_kana").on("change", function() {
+	    var val = $("#address2_kana").val();
+	    val = "onchange_" + val;
+	    $("#address2_kana_onchange").val(val);
+	});
+
+	$("#address3_kana").on("change", function() {
+	    var val = $("#address3_kana").val();
+	    val = "onchange_" + val;
+	    $("#address3_kana_onchange").val(val);
+	});
 });
 </script>
+
+<script type="text/javascript" src="../fhconvert.js"></script>
+
 </head>
 <body>
 <form>
@@ -100,6 +126,15 @@ $(window).ready( function() {
 <input id="address2_kana" name="address2_kana"><br />
 <span>町域カナ</span>
 <input id="address3_kana" name="address3_kana"><br />
+
+<span>onchange_1</span>
+<input id="address1_kana_onchange" name="address1_kana_onchange"><br />
+
+<span>onchange_2</span>
+<input id="address2_kana_onchange" name="address2_kana_onchange"><br />
+
+<span>onchange_3</span>
+<input id="address3_kana_onchange" name="address3_kana_onchange"><br />
 
 <input type="reset"  value="クリア">
 </form>

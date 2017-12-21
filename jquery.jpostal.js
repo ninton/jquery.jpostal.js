@@ -265,6 +265,7 @@ Jpostal.Jpostal.prototype.displayAddress = function () {
             that.setSelectTagForPrefecture(key, value);
         } else {
             $(key).val(value);
+            that.trigger(key);
         }
     });
 };
@@ -303,6 +304,7 @@ Jpostal.Jpostal.prototype.setSelectTagForPrefecture = function (i_key, i_value) 
     // ケース1: <option value="東京都">東京都</option>
     $(i_key).val(i_value);
     if ($(i_key).val() === i_value) {
+        this.trigger(i_key);
         return;
     }
 
@@ -321,9 +323,19 @@ Jpostal.Jpostal.prototype.setSelectTagForPrefecture = function (i_key, i_value) 
 
     if (value !== '') {
         $(i_key).val(value);
+        this.trigger(i_key);
     }
 
 };
+
+Jpostal.Jpostal.prototype.trigger = function (i_key) {
+    "use strict";
+
+    if (this.options.trigger[i_key] === undefined || this.options.trigger[i_key] === false) {
+        return;
+    }
+    $(i_key).trigger("change");
+}
 
 Jpostal.Jpostal.prototype.formatAddress = function (i_fmt, i_address) {
     "use strict";
@@ -386,6 +398,11 @@ Jpostal.Jpostal.prototype.init = function (i_options) {
 
     if (i_options.url !== undefined) {
         this.jposDb.url = i_options.url;
+    }
+
+    this.options.trigger = {};
+    if (i_options.trigger !== undefined) {
+        this.options.trigger = i_options.trigger;
     }
 };
 

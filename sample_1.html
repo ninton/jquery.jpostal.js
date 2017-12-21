@@ -21,6 +21,29 @@ $(window).ready( function() {
 			'#address2_kana'  : '%9',
 			'#address3_kana'  : '%10'
 		}
+		trigger : {
+			'#address1_kana'  : true,
+			'#address2_kana'  : true,
+			'#address3_kana'  : false
+		}
+	});
+
+	$("#address1_kana").on("change", function() {
+	    var val = $("#address1_kana").val();
+	    val = "onchange_" + val;
+	    $("#address1_kana_onchange").val(val);
+	});
+
+	$("#address2_kana").on("change", function() {
+	    var val = $("#address2_kana").val();
+	    val = "onchange_" + val;
+	    $("#address2_kana_onchange").val(val);
+	});
+
+	$("#address3_kana").on("change", function() {
+	    var val = $("#address3_kana").val();
+	    val = "onchange_" + val;
+	    $("#address3_kana_onchange").val(val);
 	});
 });
 </script>
