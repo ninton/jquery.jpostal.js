@@ -331,11 +331,11 @@ Jpostal.Jpostal.prototype.setSelectTagForPrefecture = function (i_key, i_value) 
 Jpostal.Jpostal.prototype.trigger = function (i_key) {
     "use strict";
 
-    if (this.options.trigger[i_key] === undefined || this.options.trigger[i_key] === false) {
+    if (this.options.trigger === undefined || this.options.trigger[i_key] === undefined || this.options.trigger[i_key] === false) {
         return;
     }
     $(i_key).trigger("change");
-}
+};
 
 Jpostal.Jpostal.prototype.formatAddress = function (i_fmt, i_address) {
     "use strict";

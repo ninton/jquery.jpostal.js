@@ -110,13 +110,7 @@ YUI({logInclude: {TestRunner: true}}).use("test", "console", "test-console", "ph
                         '#address5'  : '%7',
                         '#address1_kana'  : '%8',
                         '#address2_kana'  : '%9',
-                        '#address3_kana'  : '%10',
-                        '#address1_kana_zen_hira'  : '%11',
-                        '#address2_kana_zen_hira'  : '%12',
-                        '#address3_kana_zen_hira'  : '%13',
-                        '#address1_kana_zen_kata'  : '%14',
-                        '#address2_kana_zen_kata'  : '%15',
-                        '#address3_kana_zen_kata'  : '%16'
+                        '#address3_kana'  : '%10'
                     }
                 };
 
@@ -207,7 +201,8 @@ YUI({logInclude: {TestRunner: true}}).use("test", "console", "test-console", "ph
                                 "#address1": "%3",
                                 "#address2": "%4",
                                 "#address3": "%5"
-                            }
+                            },
+                            trigger: {}
                         }
                     }
                 ].forEach(function (data) {

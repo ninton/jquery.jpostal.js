@@ -1,9 +1,13 @@
+/*jslint browser:true, devel:true */
+/*global window, $:true, jQuery*/
+
 $ = require('jquery');
 require('jquery-jpostal-ja');
 
-$(window).ready( function() {
+$(window).ready(function () {
+    "use strict";
 
-    $('#postcode1').jpostal({   
+    $('#postcode1').jpostal({
         postcode : [
             '#postcode1',
             '#postcode2'

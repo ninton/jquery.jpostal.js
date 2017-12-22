@@ -47,7 +47,7 @@
 
 	<target name="jshint">
 		<apply executable="jshint" failonerror="true" parallel="true">
-			<fileset dir="${src.dir}" includes="**/*.js" />
+			<fileset dir="${src.dir}" includes="**/*.js" excludes="**/node_modules/**,**/build/**"/>
 			<fileset dir="${test.dir}" includes="**/*.js" />
 			<srcfile />
 		</apply>
@@ -55,7 +55,7 @@
 
 	<target name="jslint">
 		<apply executable="jslint" failonerror="true" parallel="true">
-			<fileset dir="${src.dir}" includes="**/*.js" />
+			<fileset dir="${src.dir}" includes="**/*.js"  excludes="**/node_modules/**,**/build/**"/>
 			<fileset dir="${test.dir}" includes="**/*.js" />
 			<arg line="--edition es5" />
 			<srcfile />
