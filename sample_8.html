@@ -5,7 +5,7 @@
 <title>J-POSTAL</title>
 <link rel="stylesheet" type="text/css" href="sample.css" />
 <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-<script type="text/javascript" src="//jpostal-1006.appspot.com/jquery.jpostal.js"></script>
+<script type="text/javascript" src="../jquery.jpostal.js"></script>
 <script type="text/javascript">
 $(window).ready( function() {
 	$('#postcode1').jpostal({
@@ -17,36 +17,20 @@ $(window).ready( function() {
 			'#address1'  : '%3',
 			'#address2'  : '%4',
 			'#address3'  : '%5',
-			'#address1_kana'  : '%8',
-			'#address2_kana'  : '%9',
-			'#address3_kana'  : '%10'
+			'#address1_kana'  : '%ASKV8',
+			'#address2_kana'  : '%ASKV9',
+			'#address3_kana'  : '%ASKV10'
 		},
-		trigger : {
-			'#address1_kana'  : true,
-			'#address2_kana'  : true,
-			'#address3_kana'  : false
+		url : {
+			'http'  : '../json/',
+			'https' : '../json/',
 		}
-	});
-
-	$("#address1_kana").on("change", function() {
-	    var val = $("#address1_kana").val();
-	    val = "onchange_" + val;
-	    $("#address1_kana_onchange").val(val);
-	});
-
-	$("#address2_kana").on("change", function() {
-	    var val = $("#address2_kana").val();
-	    val = "onchange_" + val;
-	    $("#address2_kana_onchange").val(val);
-	});
-
-	$("#address3_kana").on("change", function() {
-	    var val = $("#address3_kana").val();
-	    val = "onchange_" + val;
-	    $("#address3_kana_onchange").val(val);
 	});
 });
 </script>
+
+<script type="text/javascript" src="../fhconvert.js"></script>
+
 </head>
 <body>
 <form>
@@ -57,7 +41,7 @@ $(window).ready( function() {
 
 <span>都道府県</span>
 <select id="address1" name="address1">
-	<option value="" selected="selected">選択してください </option>
+	<option value="" selected="selected">選択してください</option> 
 	<option value="北海道">北海道</option>
 	<option value="青森県">青森県</option>
 	<option value="岩手県">岩手県</option>
