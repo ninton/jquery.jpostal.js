@@ -1,4 +1,5 @@
-/*jslint browser:true, devel:true */
+/*jslint browser:true, devel:true*/
+/*jslint unparam:true*/
 /*global window, $, jQuery*/
 
 /**
@@ -340,7 +341,8 @@ Jpostal.Jpostal.prototype.trigger = function (i_key) {
 Jpostal.Jpostal.prototype.formatAddress = function (i_fmt, i_address) {
     "use strict";
 
-    var s = i_fmt;
+    var s = i_fmt,
+        that = this;
 
     s = s.replace(/%3|%p|%prefecture/, i_address[1]);
     s = s.replace(/%4|%c|%city/,       i_address[2]);
@@ -352,7 +354,249 @@ Jpostal.Jpostal.prototype.formatAddress = function (i_fmt, i_address) {
     s = s.replace(/%9/,  i_address[7]);
     s = s.replace(/%10/, i_address[8]);
 
+    s = s.replace(/%([ASHKV]+)8/, function (match, p1) {
+        return that.mb_convert_kana(i_address[6], p1);
+    });
+    s = s.replace(/%([ASHKV]+)9/, function (match, p1) {
+        return that.mb_convert_kana(i_address[7], p1);
+    });
+    s = s.replace(/%([ASHKV]+)10/, function (match, p1) {
+        return that.mb_convert_kana(i_address[8], p1);
+    });
+
     return s;
+};
+
+Jpostal.Jpostal.prototype.mb_convert_kana = function (i_str, i_option) {
+    "use strict";
+
+    var str = i_str,
+        i,
+        o,
+        funcs;
+
+    function tr(i_str, map) {
+        var reg = new RegExp("(" + Object.keys(map).join("|") + ")", "g");
+
+        return i_str.replace(reg, function (s) {
+            return map[s];
+        });
+    }
+
+    funcs = {
+        A: function (i_str) {
+            var reg = /[A-Za-z0-9!#\$%&\(\)\*\+,\-\.\/:;<=>\?@\[\]\^_`\{\|\}]/g,
+                s;
+
+            s = i_str.replace(reg, function (s) {
+                return String.fromCharCode(s.charCodeAt(0) + 65248);
+            });
+
+            return s;
+        },
+        S: function (i_str) {
+            return i_str.replace(/\u0020/g, '\u3000');
+        },
+        H: function (i_str) {
+            var map = {
+                "ｱ": "あ",
+                "ｲ": "い",
+                "ｳ": "う",
+                "ｴ": "え",
+                "ｵ": "お",
+                "ｶ": "か",
+                "ｷ": "き",
+                "ｸ": "く",
+                "ｹ": "け",
+                "ｺ": "こ",
+                "ｻ": "さ",
+                "ｼ": "し",
+                "ｽ": "す",
+                "ｾ": "せ",
+                "ｿ": "そ",
+                "ﾀ": "た",
+                "ﾁ": "ち",
+                "ﾂ": "つ",
+                "ﾃ": "て",
+                "ﾄ": "と",
+                "ﾅ": "な",
+                "ﾆ": "に",
+                "ﾇ": "ぬ",
+                "ﾈ": "ね",
+                "ﾉ": "の",
+                "ﾊ": "は",
+                "ﾋ": "ひ",
+                "ﾌ": "ふ",
+                "ﾍ": "へ",
+                "ﾎ": "ほ",
+                "ﾏ": "ま",
+                "ﾐ": "み",
+                "ﾑ": "む",
+                "ﾒ": "め",
+                "ﾓ": "も",
+                "ﾔ": "や",
+                "ﾕ": "ゆ",
+                "ﾖ": "よ",
+                "ﾗ": "ら",
+                "ﾘ": "り",
+                "ﾙ": "る",
+                "ﾚ": "れ",
+                "ﾛ": "ろ",
+                "ﾜ": "わ",
+                "ｦ": "を",
+                "ﾝ": "ん",
+                "ｧ": "ぁ",
+                "ｨ": "ぃ",
+                "ｩ": "ぅ",
+                "ｪ": "ぇ",
+                "ｫ": "ぉ",
+                "ｯ": "っ",
+                "ｬ": "ゃ",
+                "ｭ": "ゅ",
+                "ｮ": "ょ",
+                "｡": "。",
+                "､": "、",
+                "ｰ": "ー",
+                "｢": "「",
+                "｣": "」",
+                "･": "・",
+                "ﾞ": "゛",
+                "ﾟ": "゜"
+            };
+            return tr(i_str, map);
+        },
+        K: function (i_str) {
+            var map = {
+                "ｱ": "ア",
+                "ｲ": "イ",
+                "ｳ": "ウ",
+                "ｴ": "エ",
+                "ｵ": "オ",
+                "ｶ": "カ",
+                "ｷ": "キ",
+                "ｸ": "ク",
+                "ｹ": "ケ",
+                "ｺ": "コ",
+                "ｻ": "サ",
+                "ｼ": "シ",
+                "ｽ": "ス",
+                "ｾ": "セ",
+                "ｿ": "ソ",
+                "ﾀ": "タ",
+                "ﾁ": "チ",
+                "ﾂ": "ツ",
+                "ﾃ": "テ",
+                "ﾄ": "ト",
+                "ﾅ": "ナ",
+                "ﾆ": "ニ",
+                "ﾇ": "ヌ",
+                "ﾈ": "ネ",
+                "ﾉ": "ノ",
+                "ﾊ": "ハ",
+                "ﾋ": "ヒ",
+                "ﾌ": "フ",
+                "ﾍ": "ヘ",
+                "ﾎ": "ホ",
+                "ﾏ": "マ",
+                "ﾐ": "ミ",
+                "ﾑ": "ム",
+                "ﾒ": "メ",
+                "ﾓ": "モ",
+                "ﾔ": "ヤ",
+                "ﾕ": "ユ",
+                "ﾖ": "ヨ",
+                "ﾗ": "ラ",
+                "ﾘ": "リ",
+                "ﾙ": "ル",
+                "ﾚ": "レ",
+                "ﾛ": "ロ",
+                "ﾜ": "ワ",
+                "ｦ": "ヲ",
+                "ﾝ": "ン",
+                "ｧ": "ァ",
+                "ｨ": "ィ",
+                "ｩ": "ゥ",
+                "ｪ": "ェ",
+                "ｫ": "ォ",
+                "ｯ": "ッ",
+                "ｬ": "ャ",
+                "ｭ": "ュ",
+                "ｮ": "ョ",
+                "｡": "。",
+                "､": "、",
+                "ｰ": "ー",
+                "｢": "「",
+                "｣": "」",
+                "･": "・",
+                "ﾞ": "゛",
+                "ﾟ": "゜"
+            };
+            return tr(i_str, map);
+        },
+        V: function (i_str) {
+            var map = {
+                "か゛": "が",
+                "き゛": "ぎ",
+                "く゛": "ぐ",
+                "け゛": "げ",
+                "こ゛": "ご",
+                "さ゛": "ざ",
+                "し゛": "じ",
+                "す゛": "ず",
+                "せ゛": "ぜ",
+                "そ゛": "ぞ",
+                "た゛": "だ",
+                "ち゛": "ぢ",
+                "つ゛": "づ",
+                "て゛": "で",
+                "と゛": "ど",
+                "は゛": "ば",
+                "ひ゛": "び",
+                "ふ゛": "ぶ",
+                "へ゛": "べ",
+                "ほ゛": "ぼ",
+                "は゜": "ぱ",
+                "ひ゜": "ぴ",
+                "ふ゜": "ぷ",
+                "へ゜": "ぺ",
+                "ほ゜": "ぽ",
+
+                "カ゛": "ガ",
+                "キ゛": "ギ",
+                "ク゛": "グ",
+                "ケ゛": "ゲ",
+                "コ゛": "ゴ",
+                "サ゛": "ザ",
+                "シ゛": "ジ",
+                "ス゛": "ズ",
+                "セ゛": "ゼ",
+                "ソ゛": "ゾ",
+                "タ゛": "ダ",
+                "チ゛": "ヂ",
+                "ツ゛": "ヅ",
+                "テ゛": "デ",
+                "ト゛": "ド",
+                "ハ゛": "バ",
+                "ヒ゛": "ビ",
+                "フ゛": "ブ",
+                "ヘ゛": "ベ",
+                "ホ゛": "ボ",
+                "ハ゜": "パ",
+                "ヒ゜": "ピ",
+                "フ゜": "プ",
+                "ヘ゜": "ペ",
+                "ホ゜": "ポ"
+            };
+            return tr(i_str, map);
+        }
+    };
+
+    for (i = 0; i < i_option.length; i += 1) {
+        o = i_option[i];
+        str = funcs[o](str);
+    }
+
+    return str;
 };
 
 Jpostal.Jpostal.prototype.getScriptSrc = function () {
