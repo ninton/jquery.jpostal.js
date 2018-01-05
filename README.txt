@@ -236,11 +236,11 @@ npm 使用例
 test_npm/sample_1.html
 test_npm/src/main.js
 
-プロジェクトディレクトリで、jqueryとjpostal-jquery-jaをインストールしてください。
-jpostal-jquery-jaをinstallしただけでは、jqueryを自動installされませんので、明示的にjqueryをinstallしてください。
+プロジェクトディレクトリで、jqueryとjquery-jpostal-jaをインストールしてください。
+jquery-jpostal-jaをinstallしただけでは、jqueryを自動installされませんので、明示的にjqueryをinstallしてください。
 
 $ npm install jqeury
-$ npm install jpostal-jquery-ja
+$ npm install jquery-jpostal-ja
 
 main.jsの例
 
