@@ -12,6 +12,8 @@
  * Requirements
  * jquery.js
  */
+ (function($) {
+ 
 var Jpostal = {};
 
 Jpostal.Database = function () {
@@ -803,3 +805,5 @@ window.jQuery_jpostal_callback = function (i_data) {
     };
 
 }));
+
+})( jQuery );
