@@ -1,6 +1,6 @@
 {
   "name": "jquery-jpostal-ja",
-  "version": "2.11.7",
+  "version": "2.11.8",
   "description": "A jQuery plug-in that automatically enters a japanese zip code into the address field when you enter it.",
   "peerDependencies": {
     "jquery": "*"
