@@ -123,7 +123,7 @@ Jpostal.Database.prototype.request = function (i_postcode, i_callback) {
     url = this.getUrl(head3);
 
     options = {
-        async         : false,
+        async         : true,
         dataType      : 'jsonp',
         jsonpCallback : 'jQuery_jpostal_callback',
         type          : 'GET',
