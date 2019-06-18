@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jquery": "^3.3.1",
-    "jquery-jpostal-ja": "^2.11.9"
+    "jquery": "^3.4.1",
+    "jquery-jpostal-ja": "^2.13.6"
   }
 }
