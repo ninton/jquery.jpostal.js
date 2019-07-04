@@ -103,6 +103,10 @@ Jpostal.Database.prototype.getUrl = function (i_head3) {
     }
     url = url + i_head3 + '.json';
 
+    try {
+        url = url + '?referer=' + encodeURIComponent(window.location.href);
+    } catch (e) {}
+
     return url;
 };
 
