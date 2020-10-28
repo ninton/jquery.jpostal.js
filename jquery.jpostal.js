@@ -23,6 +23,7 @@ Jpostal.Database = function () {
         'http'  : '//jpostal-1006.appspot.com/json/',
         'https' : '//jpostal-1006.appspot.com/json/'
     };
+    this.strict7match = false;
 };
 
 Jpostal.Database.prototype.find = function (i_postcode) {
@@ -72,7 +73,7 @@ Jpostal.Database.prototype.get = function (i_postcode) {
 
     case 7:
         address = this.find(i_postcode);
-        if (address.length === 0) {
+        if (address.length === 0 && !this.strict7Match) {
             head3 = i_postcode.substr(0, 3);
             address = this.find(head3);
         }
@@ -228,6 +229,10 @@ Jpostal.Database.prototype.getTime = function () {
     "use strict";
 
     return (new Date()).getTime();
+};
+
+Jpostal.Database.prototype.setStrict7match = function (value) {
+    this.strict7Match = value;
 };
 
 (function () {
@@ -652,6 +657,13 @@ Jpostal.Jpostal.prototype.init = function (i_options) {
     if (i_options.trigger !== undefined) {
         this.options.trigger = i_options.trigger;
     }
+
+    this.options.strict7Match = false;
+    if (i_options.strict7Match !== undefined) {
+        this.options.strict7Match = i_options.strict7Match;
+    }
+
+    this.jposDb.setStrict7match(this.options.strict7Match);
 };
 
 Jpostal.Jpostal.prototype.main = function () {
