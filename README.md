@@ -1,3 +1,10 @@
+# 重要なお知らせ
+
+- 2025年5月から郵便局の公式APIが運用スタートしています
+- 郵便番号から住所自動入力は「郵便局の公式API」のご利用をおすすめします
+- https://guide-biz.da.pf.japanpost.jp/api/
+-----
+
 # jquery.jpostal.js
 
 [![寄付](https://www.ninton.co.jp/wordpress/wp-content/uploads/2019/06/donate.jpg)](https://www.ninton.co.jp/donate)
