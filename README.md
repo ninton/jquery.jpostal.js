@@ -7,8 +7,6 @@
 
 # jquery.jpostal.js
 
-[![寄付](https://www.ninton.co.jp/wordpress/wp-content/uploads/2019/06/donate.jpg)](https://www.ninton.co.jp/donate)
-
 Copyright 2014-, Aoki Makoto, Ninton G.K.  
 [http://www.ninton.co.jp](http://www.ninton.co.jp)
 
